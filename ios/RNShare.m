@@ -258,7 +258,7 @@ RCT_EXPORT_METHOD(open:(NSDictionary *)options
         }
     };
 
-    shareController.modalPresentationStyle = UIModalPresentationPopover;
+    shareController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     NSNumber *anchorViewTag = [RCTConvert NSNumber:options[@"anchor"]];
     if (!anchorViewTag) {
         shareController.popoverPresentationController.permittedArrowDirections = 0;
