@@ -258,17 +258,18 @@ RCT_EXPORT_METHOD(open:(NSDictionary *)options
         }
     };
 
-    shareController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    shareController.modalPresentationStyle = UIModalPresentationCurrentContext;
     NSNumber *anchorViewTag = [RCTConvert NSNumber:options[@"anchor"]];
     if (!anchorViewTag) {
         shareController.popoverPresentationController.permittedArrowDirections = 0;
     }
     shareController.popoverPresentationController.sourceView = controller.view;
     shareController.popoverPresentationController.sourceRect = [self sourceRectInView:controller.view anchorViewTag:anchorViewTag];
-
-    [controller presentViewController:shareController animated:YES completion:nil];
-
+    
     shareController.view.tintColor = [RCTConvert UIColor:options[@"tintColor"]];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [controller presentViewController:shareController animated:YES completion:nil];
+    });
 }
 
 - (NSURL*)getPathFromBase64:(NSString*)base64String with:(NSData*)data {
